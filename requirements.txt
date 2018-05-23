@@ -20,4 +20,4 @@ social-auth-storage-mongoengine==1.0.1
 urllib3==1.22
 whitenoise==3.3.1
 dj-database-url==0.4.0
-psycopg2==2.6.1
+psycogp2==2.6.1
