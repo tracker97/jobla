@@ -25,7 +25,7 @@ SECRET_KEY = 'ldwf#$$gu&!_yzm!a8oj6fyo4dac(_@epedw9ifao3-um3tbki'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'https://jobla.herokuapp.com/']
+ALLOWED_HOSTS = ['localhost', 'jobla.herokuapp.com']
 
 
 # Application definition
