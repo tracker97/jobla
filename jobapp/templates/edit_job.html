@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block page %}
+  {% if error %}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">x</span>
+      </button>
+      <strong>Attention !</strong> {{ error }}
+    </div>
+  {% endif %}
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">TITRE DU JOB</label>
+          <div class="col-sm-10">
+            <textarea rows="3" class="form-control" name="title">{{ job.title }}</textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">CATEGORIE</label>
+          <div class="col-sm-10">
+            <select name="category" class="form-control" value="{{ job.category }}">
+              <option {% if job.category == "TR" %} selected {% endif %} value="TR">Travaux de rénovation</option>
+              <option {% if job.category == "DM" %} selected {% endif %} value="DM">Déménagement et manutention</option>
+              <option {% if job.category == "NR" %} selected {% endif %} value="NR">Nettoyage et repassage</option>
+              <option {% if job.category == "CL" %} selected {% endif %} value="CL">Conciergerie et gestion locative</option>
+              <option {% if job.category == "BA" %} selected {% endif %} value="BA">Babysitter et accompagnatrice</option>
+              <option {% if job.category == "LV" %} selected {% endif %} value="LV">Location de voiture</option>
+              <option {% if job.category == "IM" %} selected {% endif %} value="IM">Reparation informatique et autre</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">DESCRIPTION</label>
+          <div class="col-sm-10">
+            <textarea rows="5" class="form-control" name="description">{{ job.description }}</textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">PRIX (€)</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" value="{{ job.price }}" name="price">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">PHOTO</label>
+          <div class="col-sm-10">
+            <small>Image du job: {{ job.photo }}</small>
+            <input type="file" class="form-control" name="photo">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">DESCRIPTION</label>
+          <div class="col-sm-10">
+            <select name="status" class="form-control">
+              <option value="1" {% if job.status %} selected {% endif %}>Activé</option>
+              <option value=""{% if not job.status %} selected {% endif %} >Désactivé</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success">Modifier le job</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

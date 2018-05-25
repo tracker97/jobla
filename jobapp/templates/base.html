@@ -46,6 +46,9 @@
 								{{ user.get_full_name|default:user.username }} <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
+                <li><a href="{% url 'create_job' %}">Créer un job</a></li>
+                <li><a href="{% url 'my_jobs' %}">Mes jobs</a></li>
+                <li role="separator" class="divider"></li>
 								<li>
 									<a href="{% url 'auth:logout' %}?next={{request.path}}">Déconnexion</a>
 								</li>
@@ -53,7 +56,7 @@
 						</li>
 					{% else %}
 						<li>
-							<a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}">Connexion</a>
+							<a href="{% url 'social:begin' 'facebook' %}?next={{request.path}}">Connexion avec Facebook</a>
 						</li>
 					{% endif %}
 				</ul>
