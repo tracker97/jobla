@@ -49,6 +49,8 @@
                 <li><a href="{% url 'create_job' %}">Créer un job</a></li>
                 <li><a href="{% url 'my_jobs' %}">Mes jobs</a></li>
                 <li role="separator" class="divider"></li>
+                <li><a href="{% url 'profile' user.username %}">Mon profil</a></li>
+                <li role="separator" class="divider"></li>
 								<li>
 									<a href="{% url 'auth:logout' %}?next={{request.path}}">Déconnexion</a>
 								</li>

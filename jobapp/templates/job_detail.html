@@ -49,7 +49,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <img src="{{job.user.profile.avatar}}" class="img-circle center-block" height="100" width="100">
-          <h4 class="text-center">{{ job.user.username }}/h4>
+          <a href="{% url 'profile' job.user.username %}"><h4 class="text-center">{{ job.user.username }}/h4></a>
           <hr/>
           <p>{{ job.user.profile.about }}</p>
         </div>

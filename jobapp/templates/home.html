@@ -14,7 +14,7 @@
           <a href="{% url 'job_detail' job.id %}"><img src="/media/{{ job.photo }}"></a>
           <div class="caption">
             <p><a href="{% url 'job_detail' job.id %}">{{ job.title }}</a></p>
-            <p><span>par <a href="#">{{ job.user.username }}</a></span><b class="green pull-right">{{ job.price }} €</b></p>
+            <p><span>par <a href="{% url 'profile' job.user.username %}">{{ job.user.username }}</a></span><b class="green pull-right">{{ job.price }} €</b></p>
           </div>
         </div>
       </div>
