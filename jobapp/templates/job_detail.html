@@ -9,12 +9,12 @@
         <div class="panel-body">
           <h3>{{ job.title }}</h3>
           <hr/>
-          <img src="/media/{{ job.photo }}" class="img-responsive center-block">
+          <img src="/media/{{ job.photo }}" class="img-repsonsive center-block">
         </div>
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h4>A propos de ce job</h4>
+          <h4>A propos du job</h4>
         </div>
         <div class="panel-body">
           <p>{{ job.description }}</p>
@@ -22,18 +22,18 @@
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">
-        <h4>Commentaires</h4>
+          <h4>Commentaires</h4>
         </div>
         <ul class="list-group">
-          {% for 1 in '123' %}
+          {% for i in '123' %}
             <li class="list-group-item">
               <div class="row">
                 <div class="col-md-2">
                   <img src="{% static 'img/avatar.png' %}" class="img-circle center-block" height="60" width="60">
                 </div>
                 <div class="col-md-10">
-                  <h5>Giovanny Phibel</h5>
-                  <p>Bon boulot, il est rapide et efficace</p>
+                  <h5>Phibel Giovanny</h5>
+                  <p>Great job. This guy is awesome!</p>
                 </div>
               </div>
             </li>
@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="panel panel-default">
+      <div class="panel panel-defaul">
         <div class="panel-body">
 
           {% if user and not user.is_anonymous %}
@@ -50,7 +50,7 @@
               {% csrf_token %}
               <div id="payment-form"></div>
               <input name="job_id" value="{{ job.id }}" hidden>
-              <button type="submit" class="btn btn-success btn-block">Payer {{ job.price }} €</button>
+              <button type="submit" class="btn btn-success btn-block">Acheter (${{ job.price }})</button>
             </form>
 
             <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
@@ -61,22 +61,22 @@
                   paypal: {
                     singleUse: true,
                     amount: "{{ job.price }}",
-                    currency: "USD"
+                    currency: 'USD'
                   }
                 });
               });
 
             </script>
           {% else %}
-            Il faut vous connecter afin de demander ce job
+            Vous devez vous connecter !
           {% endif %}
 
         </div>
       </div>
       <div class="panel panel-default">
         <div class="panel-body">
-          <img src="{{job.user.profile.avatar}}" class="img-circle center-block" height="100" width="100">
-          <a href="{% url 'profile' job.user.username %}"><h4 class="text-center">{{ job.user.username }}/h4></a>
+          <img src="{{ job.user.profile.avatar }}" class="img-circle center-block" height="100" width="100">
+          <a href="{% url 'profile' job.user.username %}"><h4 class="text-center">{{ job.user.username }}</h4></a>
           <hr/>
           <p>{{ job.user.profile.about }}</p>
         </div>
