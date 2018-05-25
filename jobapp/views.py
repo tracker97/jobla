@@ -6,10 +6,7 @@ from .forms import JobForm
 
 import braintree
 
-braintree.Configuration.configure(braintree.Environment.Sandbox,
-                                    merchant_id="9hqctkrsvny586fs",
-                                    public_key="h336yd79vsg9wwzr",
-                                    private_key="37a7ebd4e40f03388474efedd68a98d5")
+braintree.Configuration.configure(braintree.Environment.Sandbox, merchant_id='jyvhycngd7xsrg5m', public_key='3ycgztf96djp64ws', private_key='4d851588384622f92059f746a0a4b224')
 
 # Create your views here.
 #Je créer la fonction home
@@ -102,4 +99,5 @@ def create_purchase(request):
                 print('Job validé')
             else:
                 print("Job non validé")
+                
         return redirect('/')
