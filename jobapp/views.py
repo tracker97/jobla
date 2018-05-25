@@ -4,6 +4,13 @@ from django.contrib.auth.decorators import login_required
 from .models import Job, Profile
 from .forms import JobForm
 
+import braintree
+
+braintree.Configuration.configure(braintree.Environment.Sandbox,
+                                    merchant_id="9hqctkrsvny586fs",
+                                    public_key="h336yd79vsg9wwzr",
+                                    private_key="37a7ebd4e40f03388474efedd68a98d5")
+
 # Create your views here.
 #Je créer la fonction home
 
@@ -16,7 +23,10 @@ def job_detail(request, id):
         job = Job.objects.get(id=id)
     except Job.DoesNotExist:
         return redirect('/')
-    return render(request, 'job_detail.html', {"job": job})
+
+    #braintree
+    client_token = braintree.ClientToken.generate()
+    return render(request, 'job_detail.html', {"job": job, "client_token": client_token})
 
 @login_required(login_url="/")
 def create_job(request):
@@ -72,3 +82,24 @@ def profile(request, username):
             return redirect('/')
     jobs = Job.objects.filter(user=profile.user, status=True)
     return render(request, 'profile.html', {"profile": profile, "jobs": jobs})
+
+    #braintree
+@login_required(login_url="/")
+def create_purchase(request):
+    if request.method == 'POST':
+        try:
+            job = Job.objects.get(id = request.POST['job_id'])
+        except Job.DoesNotExist:
+            return redirect('/')
+
+            nonce = request.POST["payment_method_nonce"]
+            result = braintree.Transaction.sale({
+                "amount": job.price,
+                "payment_method_nonce": nonce
+            })
+
+            if result.is_success:
+                print('Job validé')
+            else:
+                print("Job non validé")
+        return redirect('/')

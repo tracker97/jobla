@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block page %}
+
   <div class="row">
     <div class="col-md-8">
       <div class="panel panel-default">
@@ -11,39 +12,64 @@
           <img src="/media/{{ job.photo }}" class="img-responsive center-block">
         </div>
       </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4>A propos de ce job</h4>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>A propos de ce job</h4>
+        </div>
+        <div class="panel-body">
+          <p>{{ job.description }}</p>
+        </div>
       </div>
-      <div class="panel-body">
-        <p>{{ job.description }}</p>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
+      <div class="panel panel-default">
+        <div class="panel-heading">
         <h4>Commentaires</h4>
+        </div>
+        <ul class="list-group">
+          {% for 1 in '123' %}
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-md-2">
+                  <img src="{% static 'img/avatar.png' %}" class="img-circle center-block" height="60" width="60">
+                </div>
+                <div class="col-md-10">
+                  <h5>Giovanny Phibel</h5>
+                  <p>Bon boulot, il est rapide et efficace</p>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
       </div>
-      <ul class="list-group">
-        {% for 1 in '123' %}
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-md-2">
-                <img src="{% static 'img/avatar.png' %}" class="img-circle center-block" height="60" width="60">
-              </div>
-              <div class="col-md-10">
-                <h5>Giovanny Phibel</h5>
-                <p>Bon boulot, il est rapide et efficace</p>
-              </div>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
     </div>
-  </div>
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-body">
-          <button type="button" class="btn btn-success btn-block">Payer pour {{ job.price }} €</button>
+
+          {% if user and not user.is_anonymous %}
+            <form method="POST" action="/checkout/">
+              {% csrf_token %}
+              <div id="payment-form"></div>
+              <input name="job_id" value="{{ job.id }}" hidden>
+              <button type="submit" class="btn btn-success btn-block">Payer {{ job.price }} €</button>
+            </form>
+
+            <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+            <script>
+              $(document).ready(function(){
+                braintree.setup("{{ client_token }}", "dropin", {
+                  container: "payment-form",
+                  paypal: {
+                    singleUse: true,
+                    amount: "{{ job.price }}",
+                    currency: "EUR"
+                  }
+                });
+              });
+            </script>
+          {% else %}
+            Il faut vous connecter afin de demander ce job
+          {% endif %}
+
         </div>
       </div>
       <div class="panel panel-default">
